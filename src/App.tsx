@@ -1,8 +1,11 @@
+import { TodoProvider } from "./context/TodoContext";
+import TodoPage from "./pages/TodoPage";
+
 function App() {
   return (
-    <div>
-      <h1>App</h1>
-    </div>
+    <TodoProvider>
+      <TodoPage />
+    </TodoProvider>
   );
 }
 
