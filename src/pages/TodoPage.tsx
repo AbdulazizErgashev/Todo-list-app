@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useTodoContext } from "../context/TodoContext";
 import { FaPlus, FaTrash, FaCheck } from "react-icons/fa";
 
@@ -13,6 +13,12 @@ const TodoPage = () => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleAddTodo();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 p-4 flex flex-col items-center">
       <h1 className="text-3xl font-bold mb-6">Todo List</h1>
@@ -21,6 +27,7 @@ const TodoPage = () => {
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="Add a new task..."
           className="flex-1 px-4 py-2 rounded-md bg-gray-800 text-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
         />
