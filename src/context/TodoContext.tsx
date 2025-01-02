@@ -1,4 +1,10 @@
-import { createContext, useState, ReactNode, useContext } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 
 type Todo = { id: string; text: string; completed: boolean };
 
@@ -12,7 +18,14 @@ interface TodoContextType {
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
 export const TodoProvider = ({ children }: { children: ReactNode }) => {
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const savedTodos = localStorage.getItem("todos");
+    return savedTodos ? JSON.parse(savedTodos) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (text: string) => {
     setTodos((prev) => [
